@@ -1,38 +1,42 @@
 package Bkash;
 
-public class Account {
+public class Bank {
+    public void start_banking(){
+        String fahad_pin="1234";
+        String adeb_pin="2345";
+        Account fahad= new Account("Fahad","01732434234",fahad_pin);
+        Account adeb=new Account("Adeb","01231324545",adeb_pin);
 
-    private String account_holder_name;
-    private String account_phone_number;
-    private double balance = 10000;
-    //Constructor class
-    public Account(String name,String account_phone_number){
-        this.account_holder_name=name;
-        this.account_phone_number=account_phone_number;
-    }
+        System.out.println("Initial balance of fahad: "+fahad.toString());
+        System.out.println("Initial balance of Adeb: "+adeb.toString());
 
-    public void add_money(double amount){
-        this.balance += amount;
-        System.out.println("Add money: " + amount);
-    }
+        fahad.add_money(10000);
+        adeb.add_money(1000);
 
-    public void cash_out(double amount){
-        if (balance >= amount){
-            balance -= amount;
-            System.out.println("Cash out: " + amount);
-        }
-        else {
-            System.out.println("Failed to cash out due to balance limit");
-        }
-    }
+        adeb.cash_out(235,adeb_pin);
+        fahad.cash_out(1000,fahad_pin);
 
-    public String getAccount_holder_name(){
-        return this.account_holder_name;
-    }
+        fahad.cash_out(1000,adeb_pin);
 
-    protected String getAccount_phone_number(){
-        return this.account_phone_number;
+        //if(fahad.pin_update(fahad_pin,"3432")){
+           // fahad_pin="3432";
+       // }
+        fahad_pin=fahad.pin_update(fahad_pin,"3432")?"3432":fahad_pin;
+                                                            //True:false
+
+
+        fahad.cash_out(1000,fahad_pin);
+
+
+        System.out.println(fahad.getAccount_holder_name()+ "; "
+                + fahad.getAccount_phone_number() + "; "
+                + fahad.getbalance());
+        System.out.println(adeb.getAccount_holder_name()+ "; "
+                + adeb.getAccount_phone_number() + "; "
+                + adeb.getbalance());
     }
+}
+
 
     public double getbalance(){
         return this.balance;
