@@ -1,42 +1,76 @@
 package Bkash;
 
-public class Bank {
-    public void start_banking(){
-        String fahad_pin="1234";
-        String adeb_pin="2345";
-        Account fahad= new Account("Fahad","01732434234",fahad_pin);
-        Account adeb=new Account("Adeb","01231324545",adeb_pin);
+public class Account {
 
-        System.out.println("Initial balance of fahad: "+fahad.toString());
-        System.out.println("Initial balance of Adeb: "+adeb.toString());
+    private String account_holder_name;
+    private String account_phone_number;
+    private double balance = 10000;
+    private String pin;
 
-        fahad.add_money(10000);
-        adeb.add_money(1000);
-
-        adeb.cash_out(235,adeb_pin);
-        fahad.cash_out(1000,fahad_pin);
-
-        fahad.cash_out(1000,adeb_pin);
-
-        //if(fahad.pin_update(fahad_pin,"3432")){
-           // fahad_pin="3432";
-       // }
-        fahad_pin=fahad.pin_update(fahad_pin,"3432")?"3432":fahad_pin;
-                                                            //True:false
-
-
-        fahad.cash_out(1000,fahad_pin);
-
-
-        System.out.println(fahad.getAccount_holder_name()+ "; "
-                + fahad.getAccount_phone_number() + "; "
-                + fahad.getbalance());
-        System.out.println(adeb.getAccount_holder_name()+ "; "
-                + adeb.getAccount_phone_number() + "; "
-                + adeb.getbalance());
+    //Constructor class with name,phone number and pin
+    public Account(String name,String account_phone_number,String pin){
+        this.account_holder_name=name;
+        this.account_phone_number=account_phone_number;
+        this.pin=pin;
     }
-}
 
+    //Constructor without pin number to make new account without pin
+    public Account(String name,String account_phone_number){
+        this.account_holder_name=name;
+        this.account_phone_number=account_phone_number;
+    }
+    //For those who didnt use pin during account making
+    public boolean pin_update(String old_pin, String new_pin){
+        if(old_pin==this.pin){
+            this.pin=new_pin;
+            System.out.println("Pin updated! "+pin_print());
+            return true;
+        }
+        else{
+            System.out.println("Old pin doesnt match "+pin_print());
+            return false;
+        }
+
+    }
+
+    public void add_money(double amount){
+        this.balance += amount;
+        System.out.println("Add money: " + amount +account_holder_name);
+    }
+
+    public void cash_out(double amount,String pin){
+
+        if(pin!=this.pin){
+            System.out.println("Pin doesn't match");}
+
+        else{
+                if (balance >= amount) {
+                    balance -= amount;
+                    System.out.println("Cash out: " + amount + account_holder_name);
+                } else {
+                    System.out.println("Failed to cash out due to balance limit");
+                }
+            }
+    }
+
+    private String pin_print(){
+        String new_pin_info = getAccount_holder_name()+ "Pin: " +this.pin;
+        return new_pin_info;
+
+    }
+
+    public String toString(){
+        return "Account: {" +"Account holder name "+ account_holder_name +" Account phone number "+account_phone_number+
+                " Balance " + balance + "}";
+    }
+
+    public String getAccount_holder_name(){
+        return this.account_holder_name;
+    }
+
+    protected String getAccount_phone_number(){
+        return this.account_phone_number;
+    }
 
     public double getbalance(){
         return this.balance;
