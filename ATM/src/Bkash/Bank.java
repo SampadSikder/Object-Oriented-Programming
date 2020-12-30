@@ -2,9 +2,10 @@ package Bkash;
 
 public class Bank {
     public void start_banking(){
-        String fahad_pin="1234";
+        String fahad_pin="\0";
         String adeb_pin="2345";
-        Account fahad= new Account("Fahad","01732434234",fahad_pin);
+
+        Account fahad= new Account("Fahad","01732434234");//Fahad created account without pin
         Account adeb=new Account("Adeb","01231324545",adeb_pin);
 
         System.out.println("Initial balance of fahad: "+fahad.toString());
@@ -14,14 +15,19 @@ public class Bank {
         adeb.add_money(1000);
 
         adeb.cash_out(235,adeb_pin);
-        fahad.cash_out(1000,fahad_pin);
+        fahad.cash_out(500,fahad_pin);
 
+        fahad_pin=fahad.pin_update(fahad_pin,"3432")?"3432":fahad_pin;
+
+
+        adeb.cash_out(235,adeb_pin);
+        fahad.cash_out(1000,fahad_pin);
         fahad.cash_out(1000,adeb_pin);
 
         //if(fahad.pin_update(fahad_pin,"3432")){
            // fahad_pin="3432";
        // }
-        fahad_pin=fahad.pin_update(fahad_pin,"3432")?"3432":fahad_pin;
+        fahad_pin=fahad.pin_update(fahad_pin,"2678")?"2678":fahad_pin;
                                                             //True:false
 
 

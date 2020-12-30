@@ -18,10 +18,18 @@ public class Account {
     public Account(String name,String account_phone_number){
         this.account_holder_name=name;
         this.account_phone_number=account_phone_number;
+        this.pin="\0";
     }
-    //For those who didnt use pin during account making
+
+
+    //For those who didnt use pin during account making and those who want to change pin
     public boolean pin_update(String old_pin, String new_pin){
-        if(old_pin==this.pin){
+        if(this.pin=="\0"){
+            this.pin=new_pin;
+            System.out.println("New pin initialized! "+pin_print());
+            return true;
+        }
+        else if(old_pin==this.pin){
             this.pin=new_pin;
             System.out.println("Pin updated! "+pin_print());
             return true;
@@ -32,17 +40,25 @@ public class Account {
         }
 
     }
+    private String pin_print(){
+        String new_pin_info = getAccount_holder_name()+ "Pin: " +this.pin;
+        return new_pin_info;
+    }
 
     public void add_money(double amount){
         this.balance += amount;
-        System.out.println("Add money: " + amount +account_holder_name);
+        System.out.println("Add money: " + amount + " "+ account_holder_name);
     }
 
     public void cash_out(double amount,String pin){
 
         if(pin!=this.pin){
-            System.out.println("Pin doesn't match");}
+            System.out.println("Pin doesn't match or is not updated!");}
 
+        //Not proceed command when no pin is initialized
+        else if(pin==this.pin && pin=="\0"){
+            System.out.println("Pin not initialized");
+        }
         else{
                 if (balance >= amount) {
                     balance -= amount;
@@ -53,11 +69,7 @@ public class Account {
             }
     }
 
-    private String pin_print(){
-        String new_pin_info = getAccount_holder_name()+ "Pin: " +this.pin;
-        return new_pin_info;
 
-    }
 
     public String toString(){
         return "Account: {" +"Account holder name "+ account_holder_name +" Account phone number "+account_phone_number+
