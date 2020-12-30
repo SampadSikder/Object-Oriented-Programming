@@ -24,11 +24,13 @@ public class Account {
 
     //For those who didnt use pin during account making and those who want to change pin
     public boolean pin_update(String old_pin, String new_pin){
+    //New pin    
         if(this.pin=="\0"){
             this.pin=new_pin;
             System.out.println("New pin initialized! "+pin_print());
             return true;
         }
+     //Change pin   
         else if(old_pin==this.pin){
             this.pin=new_pin;
             System.out.println("Pin updated! "+pin_print());
